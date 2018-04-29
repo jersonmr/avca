@@ -1,0 +1,15 @@
+.category {
+  &-name {
+    color: #0083ca;
+    font-size: 1.875em;
+    line-height: 1em;
+    margin: 0 0 20px;
+  }
+  &-content {
+    padding-top: 6rem;
+    p {
+      font-size: 1.25em;
+      line-height: 1.25em;
+    }
+  }
+}
