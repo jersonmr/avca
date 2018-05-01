@@ -9,12 +9,12 @@
             <img src="{{ asset('img'.$area->foto) }}" alt="{{ $area->nombre }}" class="card-img-top" style="flex: 1 1 100%;">
             <div class="card-img-overlay d-flex align-items-end justify-content-center">
               <p class="card-text">
-                @foreach(\App\Models\rrhh\Vacante::where('estatus', 'activa')->get() as $vacante)
+                @foreach($vacantes as $vacante)
                   @if($vacante->area_id == $area->area_id)
-                  <a href="{{ route('cargos.get', $area->slug) }}" class="btn btn-lg btn-block btn-success">
-                    <i class="fa fa-plus"></i>
-                    Información
-                  </a>
+                    <a href="{{ route('cargos.get', $area->slug) }}" class="btn btn-lg btn-block btn-success">
+                      <i class="fa fa-plus"></i>
+                      Información
+                    </a>
                   @endif
                 @endforeach
               </p>

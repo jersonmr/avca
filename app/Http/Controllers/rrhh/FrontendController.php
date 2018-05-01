@@ -17,8 +17,10 @@ class FrontendController extends Controller
     public function home()
     {
         $areas = Area::all();
+        $vacantes = Vacante::all();
+        $vacantes = $vacantes->unique('area_id');
 
-        return view('rrhh.frontend.home', compact('areas'));
+        return view('rrhh.frontend.home', compact(['areas', 'vacantes']));
     }
 
     public function obtenerCargos($slug)
