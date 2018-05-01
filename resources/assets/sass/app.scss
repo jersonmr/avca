@@ -19,11 +19,12 @@
 @import "core/base";
 
 // Layout
-@import "layout/sidebar";
-@import "layout/content";
+@import "layout/frontend/header";
+@import "layout/frontend/content";
 
 // Compónentes
 @import "components/card";
+@import "components/modal";
 
 // Paginas
 @import "pages/landing/rrhh";

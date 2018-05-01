@@ -11,7 +11,7 @@
         </p>
       </a>
       <ul class="nav nav-treeview">
-        <li class="nav-item has-treeview menu-open">
+        <li class="nav-item has-treeview">
           <a href="#" class="nav-link active">
             <i class="fa fa-users nav-icon"></i>
             <p>Captación <i class="right fa fa-angle-left"></i></p>
@@ -51,7 +51,7 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item has-treeview menu-open">
+        <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="fa fa-user nav-icon"></i>
             <p>Datos del empleado <i class="right fa fa-angle-left"></i></p>
@@ -90,7 +90,7 @@
           </ul>
         </li>
         {{--Administracion de nominas--}}
-        <li class="nav-item has-treeview menu-open">
+        <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="fa fa-file nav-icon"></i>
             <p>Nóminas <i class="right fa fa-angle-left"></i></p>
@@ -123,14 +123,14 @@
           </ul>
         </li>
         {{--Modulo de mantenimiento--}}
-        <li class="nav-item has-treeview menu-open">
+        <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="fa fa-cog nav-icon"></i>
             <p>Mantenimiento <i class="right fa fa-angle-left"></i></p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="{{ route('cargo.list') }}" class="nav-link">
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>Cargos</p>
               </a>
@@ -160,7 +160,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="{{ route('vacante.create') }}" class="nav-link">
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>Vacantes</p>
               </a>

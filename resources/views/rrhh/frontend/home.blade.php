@@ -4,28 +4,31 @@
   {{-- Owl Carousel --}}
   <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/sweetalert.min.css') }}">
 @endsection
 
 @section('content')
   {{-- Cabecera --}}
-  @include('rrhh.partials.frontend.header')
+  @include('rrhh.frontend.partials.hero')
 
   {{-- Seccion de postulaciones --}}
-  @include('rrhh.partials.frontend.applications')
+  @include('rrhh.frontend.partials.applications')
 
   {{-- About --}}
-  @include('rrhh.partials.frontend.about')
+  @include('rrhh.frontend.partials.about')
 
   {{-- Proceso de seleccion --}}
-  @include('rrhh.partials.frontend.selection')
+  @include('rrhh.frontend.partials.selection')
 
   {{-- Contactenos --}}
-  @include('rrhh.partials.frontend.contact')
+  @include('rrhh.frontend.partials.contact')
+
 @endsection
 
 @section('scripts')
   <script src="{{ asset('js/fontawesome-all.min.js') }}"></script>
   <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+  <script src="{{ asset('js/sweetalert.min.js') }}"></script>
   <script>
     $(document).ready(function() {
       // Select all links with hashes
@@ -87,4 +90,6 @@
       });
     });
   </script>
+  <!-- Include this after the sweet alert js file -->
+  @include('sweet::alert')
 @endsection

@@ -1,10 +1,10 @@
-.header {
+.hero {
   background: #000 url("/../img/rrhh/bg-rrhh.jpeg") no-repeat;
   background-attachment: fixed;
   background-size: cover;
   background-position: center center;
   height: 100vh;
-  position: relative; 
+  position: relative;
   &:before {
     content: '';
     position: absolute;
@@ -13,40 +13,25 @@
     bottom: 0;
     left: 0;
     background: rgba(0, 0, 0, .7);
+    z-index: 1;
   }
-  &__navbar {
-    background: rgba(0, 0, 0, .7);
-    border-bottom: 1px solid rgb(73, 73, 73);
-    .navbar-brand, .nav-link {
-      color: white;
-    }
-    .navbar-brand {
-      font-size: 24px;
-    }
-    .nav-link {
-      font-size: 18px;
-      &:hover {
-        color: rgb(219, 216, 216);
-      }
-    }
-  }
-  &__hero {
-    font-family: $ubuntu-font;
-    position: absolute;
-    padding-top: 90px;  
-    width: 100%;
-    height: 100%;  
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-end;
-  }
-  &__hero__text {
+  font-family: $ubuntu-font;
+  //position: absolute;
+  padding-top: 90px;
+  width: 100%;
+  //height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+
+  &__text {
     position: absolute;
     top: 50%;
     left: 150px;
     transform: translateY(-50%);
     text-align: left;
+    z-index: 2;
     h1 {
       color: #fff;
       font-size: 3rem;
@@ -59,7 +44,8 @@
       }
     }
   }
-  &__hero__arrow {
+  &__arrow {
+    z-index: 2;
     a {
       color: white;
       font-size: 2rem;

@@ -7,7 +7,6 @@
       <br>
       <span><i class="fa fa-phone mr-3"></i> 0293-4332040</span> <br>
       <span><i class="fas fa-mobile mr-3"></i> 04167834720</span>
-      </span>
     </div>
   </div>
 </section>
