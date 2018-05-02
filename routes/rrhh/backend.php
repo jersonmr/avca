@@ -18,8 +18,15 @@ Route::group(['prefix' => 'backend', 'middleware' => 'auth'], function() {
         Route::post('actualizar-cargo/{id}', 'rrhh\CargoController@update')->name('cargo.update');
     });
 
+    // Seleccion
+    Route::group(['prefix' => 'seleccion'], function () {
+        Route::get('seleccion', 'rrhh\SeleccionController@index')->name('seleccion.list');
+    });
+
     // Consultas AJAX
     Route::get('obtener-sucursales', 'rrhh\EmpleadoController@obtenerSucursales');
     Route::get('obtener-areas', 'rrhh\EmpleadoController@obtenerAreas');
     Route::get('obtener-cargos/{area}', 'rrhh\EmpleadoController@obtenerCargos');
+    Route::get('obtener-aspirantes', 'rrhh\SeleccionController@obtenerAspirantes');
+//    Route::get('obtener-aspirantes/{aspirante}/{cargo}/{area}', 'rrhh\SeleccionController@obtenerAspirantes');
 });

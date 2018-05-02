@@ -35,7 +35,7 @@
           </div>
 
           <div class="form-group">
-            <input type="submit" value="Actualizar perfi" class="btn btn-info">
+            <input type="submit" value="Actualizar perfil" class="btn btn-info">
           </div>
         </form>
       </div>

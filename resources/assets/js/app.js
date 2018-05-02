@@ -17,6 +17,7 @@ window.Vue = require('vue');
 
 Vue.component('vacante-form', require('./components/backend/vacante/VacanteForm'));
 Vue.component('aspirante-form', require('./components/frontend/AspiranteForm'));
+Vue.component('vacante-filter', require('./components/backend/vacante/VacanteFilter'));
 
 const app = new Vue({
     el: '#rrhh'
