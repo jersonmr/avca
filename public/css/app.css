@@ -10713,7 +10713,7 @@ body {
 
 .about .media-body p {
   font-size: 1rem;
-  text-align: justify;
+  text-align: left;
 }
 
 .about__item {
@@ -10731,9 +10731,10 @@ body {
 }
 
 .about__objetives li {
+  list-style: none;
   margin-bottom: 1rem;
   font-size: 1rem;
-  text-align: justify;
+  text-align: left;
 }
 
 .recruitment__text,
@@ -10763,7 +10764,11 @@ body {
 .recruitment .card-text,
 .contact .card-text {
   font-size: 1rem;
-  text-align: justify;
+  text-align: left;
+}
+
+.recruitment .card-body {
+  padding: 1.25rem 0.75rem !important;
 }
 
 .applications {

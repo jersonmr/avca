@@ -14313,6 +14313,8 @@ window.Vue = __webpack_require__(39);
 Vue.component('vacante-form', __webpack_require__(42));
 Vue.component('aspirante-form', __webpack_require__(48));
 Vue.component('vacante-filter', __webpack_require__(53));
+Vue.component('aspirante-table', __webpack_require__(63));
+Vue.component('aspirante-status', __webpack_require__(68));
 
 var app = new Vue({
   el: '#rrhh'
@@ -48692,7 +48694,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48703,6 +48705,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_bus__ = __webpack_require__(62);
 //
 //
 //
@@ -48750,6 +48753,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "VacanteFilter",
@@ -48760,54 +48765,69 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       cargo: null,
       sucursales: [],
       cargos: [],
-      areas: []
+      areas: [],
+      aspirantes: [],
+      estatus: 'registrados'
     };
   },
   created: function created() {
+    var _this = this;
+
     this.obtenerSucursales();
     this.obtenerAreas();
+    __WEBPACK_IMPORTED_MODULE_0__event_bus__["a" /* EventBus */].$on('estatus', function (estatus) {
+      if (estatus != '') {
+        _this.estatus = estatus;
+      }
+    });
   },
 
   methods: {
     obtenerSucursales: function obtenerSucursales() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('/rrhh/backend/obtener-sucursales').then(function (response) {
-        _this.sucursales = response.data;
+        _this2.sucursales = response.data;
       }).catch(function (error) {
         console.log(error);
       });
     },
     obtenerAreas: function obtenerAreas() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('/rrhh/backend/obtener-areas').then(function (response) {
-        _this2.areas = response.data;
+        _this3.areas = response.data;
       }).catch(function (error) {
         console.log(error);
       });
     },
     obtenerCargos: function obtenerCargos() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('/rrhh/backend/obtener-cargos/' + this.area).then(function (response) {
-        _this3.cargos = response.data;
+        _this4.cargos = response.data;
       }).catch(function (error) {
         console.log(error);
       });
     },
     obtenerAspirantes: function obtenerAspirantes() {
-      if (!this.aspirante || !this.area || !this.cargo) {
+      var _this5 = this;
+
+      __WEBPACK_IMPORTED_MODULE_0__event_bus__["a" /* EventBus */].$emit('estatus', this.estatus);
+      if (!this.sucursal || !this.area || !this.cargo) {
         return;
       }
       axios.get('/rrhh/backend/obtener-aspirantes/', {
         params: {
           sucursal_id: this.sucursal,
           area_id: this.area,
-          cargo_id: this.cargo
+          cargo_id: this.cargo,
+          estatus: this.estatus
         }
       }).then(function (response) {
         console.log(response.data);
+        _this5.aspirantes = response.data;
+        __WEBPACK_IMPORTED_MODULE_0__event_bus__["a" /* EventBus */].$emit('aspirantes', _this5.aspirantes);
       }).catch(function (error) {
         console.error(error);
       });
@@ -49055,6 +49075,572 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventBus; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+
+
+var EventBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(64)
+}
+var normalizeComponent = __webpack_require__(5)
+/* script */
+var __vue_script__ = __webpack_require__(66)
+/* template */
+var __vue_template__ = __webpack_require__(67)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-7880ed3f"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\backend\\aspirante\\AspiranteTable.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7880ed3f", Component.options)
+  } else {
+    hotAPI.reload("data-v-7880ed3f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(65);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("68a51c32", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7880ed3f\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AspiranteTable.vue", function() {
+     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7880ed3f\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AspiranteTable.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_bus__ = __webpack_require__(62);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AspiranteTable",
+  data: function data() {
+    return {
+      aspirantes: [],
+      estatus: 'registrados',
+      estatusAnterior: 'registrados'
+    };
+  },
+
+  computed: {
+    verEstatusSiguiente: function verEstatusSiguiente() {
+      if (this.estatusAnterior === 'registrados') return 'Verificar';else if (this.estatusAnterior === 'verificados') return 'Convocar';else if (this.estatusAnterior === 'convocados') return 'Entrevistar';else if (this.estatusAnterior === 'entrevistados') return 'Seleccionar';else {
+        return 'Contactar';
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    __WEBPACK_IMPORTED_MODULE_0__event_bus__["a" /* EventBus */].$on('aspirantes', function (aspirantes) {
+      _this.aspirantes = aspirantes;
+    });
+    __WEBPACK_IMPORTED_MODULE_0__event_bus__["a" /* EventBus */].$on('estatus', function (estatus) {
+      if (estatus !== '') {
+        if (estatus === 'registrados') {
+          _this.estatus = 'verificados';
+          _this.estatusAnterior = 'registrados';
+        }
+        if (estatus === 'verificados') {
+          _this.estatus = 'convocados';
+          _this.estatusAnterior = 'verificados';
+        } else if (estatus === 'convocados') {
+          _this.estatus = 'entrevistados';
+          _this.estatusAnterior = 'convocados';
+        } else if (estatus === 'entrevistados') {
+          _this.estatus = 'seleccionados';
+          _this.estatusAnterior = 'entrevistados';
+        } else if (estatus === 'seleccionados') {
+          _this.estatusAnterior = 'seleccionados';
+        }
+      } else {
+        _this.estatusAnterior = 'registrados';
+      }
+      console.log(_this.estatus);
+    });
+  },
+
+  methods: {
+    cambiarEstatus: function cambiarEstatus(aspirante_id) {
+      var _this2 = this;
+
+      axios.get('/rrhh/backend/cambiar-estatus/', {
+        params: {
+          estatus: this.estatus,
+          aspirante_id: aspirante_id
+        }
+      }).then(function (response) {
+        console.log(response.data);
+        _this2.aspirantes = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }
+});
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "aspirantes__table" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header bg-info-gradient" }, [
+        _c("h4", { staticClass: "text-center aspirantes__title" }, [
+          _vm._v("Aspirantes en estatus: " + _vm._s(_vm.estatusAnterior))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("table", { staticClass: "table table-striped" }, [
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v("Fecha")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Nombre y Apellido")]),
+              _vm._v(" "),
+              _vm.estatusAnterior === "registrados"
+                ? _c("th", [_vm._v("Curriculum")])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.verEstatusSiguiente))])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.aspirantes, function(aspirante) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(aspirante.created_at))]),
+                _vm._v(" "),
+                _c("td", [
+                  _vm._v(
+                    _vm._s(aspirante.nombre) + " " + _vm._s(aspirante.apellido)
+                  )
+                ]),
+                _vm._v(" "),
+                _vm.estatusAnterior === "registrados"
+                  ? _c("td", [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-outline-info",
+                          attrs: { href: aspirante.curriculum }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-file-pdf-o" }),
+                          _vm._v(" Ver curriculum\n              ")
+                        ]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-outline-success",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.cambiarEstatus(aspirante.aspirante_id)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-check" })]
+                  )
+                ])
+              ])
+            })
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7880ed3f", module.exports)
+  }
+}
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(69)
+}
+var normalizeComponent = __webpack_require__(5)
+/* script */
+var __vue_script__ = __webpack_require__(71)
+/* template */
+var __vue_template__ = __webpack_require__(72)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-02b15ed1"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\backend\\aspirante\\AspiranteStatus.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-02b15ed1", Component.options)
+  } else {
+    hotAPI.reload("data-v-02b15ed1", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(70);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("8e847bae", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-02b15ed1\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AspiranteStatus.vue", function() {
+     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-02b15ed1\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AspiranteStatus.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_bus__ = __webpack_require__(62);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AspiranteStatus",
+  data: function data() {
+    return {
+      aspirantes: []
+    };
+  },
+
+  methods: {
+    aspirantesPorEstatus: function aspirantesPorEstatus(estatus) {
+      var _this = this;
+
+      __WEBPACK_IMPORTED_MODULE_0__event_bus__["a" /* EventBus */].$emit('estatus', estatus);
+      axios.get('/rrhh/backend/obtener-aspirantes-estatus/' + estatus).then(function (response) {
+        console.log(response.data);
+        _this.aspirantes = response.data;
+        __WEBPACK_IMPORTED_MODULE_0__event_bus__["a" /* EventBus */].$emit('aspirantes', _this.aspirantes);
+      });
+    }
+  }
+});
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "aspirantes__filter pt-3" }, [
+    _c("ul", { staticClass: "nav justify-content-center" }, [
+      _c("li", { staticClass: "nav-item" }, [
+        _c(
+          "a",
+          {
+            staticClass: "nav-link",
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.aspirantesPorEstatus("registrados")
+              }
+            }
+          },
+          [_vm._v("Registrados")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "nav-item" }, [
+        _c(
+          "a",
+          {
+            staticClass: "nav-link",
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.aspirantesPorEstatus("verificados")
+              }
+            }
+          },
+          [_vm._v("Verificados")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "nav-item" }, [
+        _c(
+          "a",
+          {
+            staticClass: "nav-link",
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.aspirantesPorEstatus("convocados")
+              }
+            }
+          },
+          [_vm._v("Convocados")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "nav-item" }, [
+        _c(
+          "a",
+          {
+            staticClass: "nav-link",
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.aspirantesPorEstatus("entrevistados")
+              }
+            }
+          },
+          [_vm._v("Entrevistados")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "nav-item" }, [
+        _c(
+          "a",
+          {
+            staticClass: "nav-link",
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.aspirantesPorEstatus("seleccionados")
+              }
+            }
+          },
+          [_vm._v("Seleccionados")]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-02b15ed1", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

@@ -41,8 +41,10 @@
             </form>
           </div>
         </div>--}}
+        {{--Filtrado de aspirantes por estatus--}}
+        <aspirante-status></aspirante-status>
         <vacante-filter></vacante-filter>
-        <div class="aspirantes__filter pt-3">
+        {{--<div class="aspirantes__filter pt-3">
           <ul class="nav justify-content-center">
             <li class="nav-item">
               <a href="#" class="nav-link">Registrados</a>
@@ -60,10 +62,12 @@
               <a href="#" class="nav-link">Seleccionados</a>
             </li>
           </ul>
-        </div>
+        </div>--}}
         <hr>
 
-        <div class="aspirantes__table">
+        {{--Listado de aspirantes--}}
+        <aspirante-table></aspirante-table>
+        {{--<div class="aspirantes__table">
           <div class="card">
             <div class="card-header bg-info-gradient">
               <h4 class="text-center aspirantes__title">Aspirantes Registrados</h4>
@@ -89,7 +93,7 @@
               </table>
             </div>
           </div>
-        </div>
+        </div>--}}
       </div>
     </div>
   </div>

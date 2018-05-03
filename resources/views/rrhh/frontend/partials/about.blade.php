@@ -33,10 +33,10 @@
           <div class="col-lg-6">
              <article class="about__item about__item--mision">
               <div class="media">
-                <img class="mr-3" src="{{ asset('img/rrhh/objetives.jpeg') }}" alt="Objetives" class="about__img">
+                <img class="mr-3" src="{{ asset('img/rrhh/objetives.svg') }}" alt="Objetives" class="about__img">
                 <div class="media-body">
                   <h5 class="mt-0">Objetivos</h5>
-                  <ul class="about__objetives">
+                  <ul class="about__objetives m-0 p-0">
                     <li>Cubrir los nuevos cargos o las vacantes existentes dentro de la Institución, seleccionando el personal idoneo y cumpliendo con los procesos establecidos.</li>
                     <li>Fortalecer y mejorar el clima laboral dentro de la Institución, potenciando el trabajo en equipo, la participación y la comunicación efectiva.</li>
                     <li>Otorgar de manera efectiva, oportuna y eficiente los beneficios al personal de la Institución.</li>              

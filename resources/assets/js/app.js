@@ -18,6 +18,8 @@ window.Vue = require('vue');
 Vue.component('vacante-form', require('./components/backend/vacante/VacanteForm'));
 Vue.component('aspirante-form', require('./components/frontend/AspiranteForm'));
 Vue.component('vacante-filter', require('./components/backend/vacante/VacanteFilter'));
+Vue.component('aspirante-table', require('./components/backend/aspirante/AspiranteTable'));
+Vue.component('aspirante-status', require('./components/backend/aspirante/AspiranteStatus'));
 
 const app = new Vue({
     el: '#rrhh'

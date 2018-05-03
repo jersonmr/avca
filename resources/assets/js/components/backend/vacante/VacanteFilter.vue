@@ -46,6 +46,8 @@
 </template>
 
 <script>
+  import {EventBus} from "../event-bus";
+
   export default {
     name: "VacanteFilter",
     data() {
@@ -56,11 +58,18 @@
         sucursales: [],
         cargos: [],
         areas: [],
+        aspirantes: [],
+        estatus: 'registrados'
       }
     },
     created() {
       this.obtenerSucursales();
       this.obtenerAreas();
+      EventBus.$on('estatus', (estatus) => {
+        if (estatus != '') {
+          this.estatus = estatus;
+        }
+      })
     },
     methods: {
       obtenerSucursales() {
@@ -91,18 +100,22 @@
           });
       },
       obtenerAspirantes() {
-        if (!this.aspirante || !this.area || !this.cargo) {
+        EventBus.$emit('estatus', this.estatus);
+        if (!this.sucursal || !this.area || !this.cargo) {
           return;
         }
         axios.get('/rrhh/backend/obtener-aspirantes/', {
           params: {
             sucursal_id: this.sucursal,
             area_id: this.area,
-            cargo_id: this.cargo
+            cargo_id: this.cargo,
+            estatus: this.estatus
           }
         })
           .then(response => {
-            console.log(response.data)
+            console.log(response.data);
+            this.aspirantes = response.data;
+            EventBus.$emit('aspirantes', this.aspirantes);
           })
           .catch(error => {
             console.error(error)
