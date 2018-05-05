@@ -11,7 +11,9 @@
               <th>Fecha</th>
               <th>Nombre y Apellido</th>
               <th v-if="estatusAnterior === 'registrados'">Curriculum</th>
-              <th>{{ verEstatusSiguiente }}</th>
+              <th v-if="estatusAnterior === 'verificados'">Requisitos</th>
+              <th v-if="estatusAnterior === 'convocados'">Entrevista</th>
+              <th v-if="estatusAnterior === 'registrados'">{{ verEstatusSiguiente }}</th>
             </tr>
           </thead>
           <tbody>
@@ -23,7 +25,17 @@
                   <i class="fa fa-file-pdf-o"></i> Ver curriculum
                 </a>
               </td>
-              <td>
+              <td v-if="estatusAnterior === 'verificados'">
+                <button class="btn btn-outline-info" data-toggle="modal" data-target="#aspiranteVerificadoModal" @click.prevent="obtenerAspirante(aspirante)">
+                  <i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar requisitos
+                </button>
+              </td>
+              <th v-if="estatusAnterior === 'convocados'">
+                <button class="btn btn-outline-info" data-toggle="modal" data-target="#aspiranteConvocadoModal" @click.prevent="obtenerAspirante(aspirante)">
+                  <i class="fa fa-sticky-note" aria-hidden="true"></i>
+                </button>
+              </th>
+              <td v-if="estatusAnterior === 'registrados'">
                 <a href="#" class="btn btn-sm btn-outline-success" @click.prevent="cambiarEstatus(aspirante.aspirante_id)">
                   <i class="fa fa-check"></i>
                 </a>
@@ -33,19 +45,28 @@
         </table>
       </div>
     </div>
+
+    <!--Aspirante verificado modal-->
+    <aspirante-verificado-modal></aspirante-verificado-modal>
+
+    <!--Aspirante convocado modal-->
+    <aspirante-convocado-modal></aspirante-convocado-modal>
   </div>
 </template>
 
 <script>
   import {EventBus} from "../event-bus";
+  import AspiranteVerificadoModal from "./AspiranteVerificadoModal";
+  import AspiranteConvocadoModal from "./AspiranteConvocadoModal";
 
   export default {
     name: "AspiranteTable",
+    components: {AspiranteConvocadoModal, AspiranteVerificadoModal},
     data() {
       return {
         aspirantes: [],
         estatus: 'registrados',
-        estatusAnterior: 'registrados'
+        estatusAnterior: 'registrados',
       }
     },
     computed: {
@@ -108,6 +129,9 @@
           .catch(error => {
             console.log(error)
           })
+      },
+      obtenerAspirante(aspirante) {
+        EventBus.$emit('email-verificado', aspirante);
       }
     },
   }

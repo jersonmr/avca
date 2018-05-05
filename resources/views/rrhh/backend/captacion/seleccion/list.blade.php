@@ -1,5 +1,8 @@
 @extends('rrhh.layouts.backend')
 
+@push('styles')
+@endpush
+
 @section('content')
   <div class="container">
     <div class="row aspirantes">
@@ -98,3 +101,6 @@
     </div>
   </div>
 @endsection
+
+@push('scripts')
+@endpush
