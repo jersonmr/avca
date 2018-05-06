@@ -25,51 +25,59 @@
             <div class="row mb-3 align-items-center">
               <div class="col-md-2 text-left">Presentación personal</div>
               <div v-for="cualidad in cualidades" class="col-md-2 text-center">
-                <i class="fa fa-check-circle-o text-success" v-if="cualidad === entrevista.presentacion"></i>
+                <i class="fa fa-check fa-2x text-success" v-if="cualidad === entrevista.presentacion"></i>
               </div>
             </div>
             <div class="row mb-3 align-items-center">
               <div class="col-md-2 text-left">Inteligencia efectiva</div>
               <div v-for="cualidad in cualidades" class="col-md-2 text-center">
-                <i class="fa fa-check-circle-o text-success" v-if="cualidad === entrevista.inteligencia"></i>
+                <i class="fa fa-check fa-2x text-success" v-if="cualidad === entrevista.inteligencia"></i>
               </div>
             </div>
             <div class="row mb-3 align-items-center">
               <div class="col-md-2 text-left">Formación</div>
               <div v-for="cualidad in cualidades" class="col-md-2 text-center">
-                <i class="fa fa-check-circle-o text-success" v-if="cualidad === entrevista.formacion"></i>
+                <i class="fa fa-check fa-2x text-success" v-if="cualidad === entrevista.formacion"></i>
               </div>
             </div>
             <div class="row mb-3 align-items-center">
               <div class="col-md-2 text-left">Experiencia</div>
               <div v-for="cualidad in cualidades" class="col-md-2 text-center">
-                <i class="fa fa-check-circle-o text-success" v-if="cualidad === entrevista.experiencia"></i>
+                <i class="fa fa-check fa-2x text-success" v-if="cualidad === entrevista.experiencia"></i>
               </div>
             </div>
             <div class="row mb-3 align-items-center">
               <div class="col-md-2 text-left">Facilidad de expresión</div>
               <div v-for="cualidad in cualidades" class="col-md-2 text-center">
-                <i class="fa fa-check-circle-o text-success" v-if="cualidad === entrevista.facilidad_expresion"></i>
+                <i class="fa fa-check fa-2x text-success" v-if="cualidad === entrevista.facilidad_expresion"></i>
               </div>
             </div>
             <div class="row mb-3 align-items-center">
               <div class="col-md-2 text-left">Habilidad para relacionarse</div>
               <div v-for="cualidad in cualidades" class="col-md-2 text-center">
-                <i class="fa fa-check-circle-o text-success" v-if="cualidad === entrevista.habilidad"></i>
+                <i class="fa fa-check fa-2x text-success" v-if="cualidad === entrevista.habilidad"></i>
               </div>
             </div>
             <div class="row mb-3 align-items-center">
               <div class="col-md-2 text-left">Otros conocimientos</div>
               <div v-for="cualidad in cualidades" class="col-md-2 text-center">
-                <i class="fa fa-check-circle-o text-success" v-if="cualidad === entrevista.otros"></i>
+                <i class="fa fa-check fa-2x text-success" v-if="cualidad === entrevista.otros"></i>
+              </div>
+            </div>
+
+            <hr>
+            <div class="row">
+              <div class="col-12 text-left">
+                <label>Entrevista:</label>
+                <p>{{ entrevista.observaciones }}</p>
               </div>
             </div>
 
             <div class="row">
-              <p>{{ entrevista.observaciones }}</p>
+              <div class="col-12">
+                <button class="btn btn-outline-info" @click.prevent="cambiarEstatus(aspirante.aspirante_id)">Preseleccionar</button>
+              </div>
             </div>
-
-            <input type="hidden" name="aspirante_id" :value="aspirante.aspirante_id">
 
           </div>
           <div class="modal-footer">
@@ -97,9 +105,6 @@
       }
     },
     mounted() {
-      /*EventBus.$on('aspirante-seleccionado', (aspirante) => {
-        this.aspirante = aspirante;
-      });*/
       this.obtenerDatosEntrevista();
     },
     methods: {
@@ -108,6 +113,35 @@
           .then(response => {
             console.log(response.data);
             this.entrevista = response.data;
+          })
+      },
+      cambiarEstatus(aspirante_id) {
+        axios.get('/rrhh/backend/cambiar-estatus/', {
+          params: {
+            estatus: 'seleccionados',
+            aspirante_id: aspirante_id
+          }
+        })
+          .then(response => {
+            console.log(response.data);
+            this.aspirantes = response.data;
+
+            $("#aspiranteEntrevistadoModal").modal('hide');//ocultamos el modal
+            $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+            $('.modal-backdrop').remove();//eliminamos el backdrop del modal
+
+            this.$swal({
+              //position: 'top-end',
+              type: 'success',
+              title: 'Aspirante preseleccionado.',
+              showConfirmButton: false,
+              timer: 2000
+            });
+
+            EventBus.$emit('aspirantes', this.aspirantes);
+          })
+          .catch(error => {
+            console.log(error)
           })
       }
     },

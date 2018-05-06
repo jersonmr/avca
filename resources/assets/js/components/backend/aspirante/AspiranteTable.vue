@@ -13,6 +13,8 @@
               <th v-if="estatusAnterior === 'registrados'">Curriculum</th>
               <th v-if="estatusAnterior === 'verificados'">Requisitos</th>
               <th v-if="estatusAnterior === 'convocados'">Entrevista</th>
+              <th v-if="estatusAnterior === 'seleccionados'">Teléfono de contacto</th>
+              <th v-if="estatusAnterior === 'seleccionados'">Seleccionado</th>
               <th v-if="estatusAnterior === 'registrados'">{{ verEstatusSiguiente }}</th>
             </tr>
           </thead>
@@ -38,9 +40,17 @@
               <td v-if="estatusAnterior === 'entrevistados'">
                 <!--Aspirante entrevista modal-->
                 <aspirante-entrevistado-modal :aspirante="aspirante" />
-                <!--<button class="btn btn-outline-info" data-toggle="modal" data-target="#aspiranteEntrevistadoModal" @click.prevent="obtenerAspirante(aspirante)">
-                  <i class="fa fa-eye" aria-hidden="true"></i>
-                </button>-->
+              </td>
+              <td v-if="estatusAnterior === 'seleccionados'">
+                <span>
+                  <i class="fa fa-phone-square text-success"></i>
+                  <b>{{ aspirante.telefono_movil }}</b>
+                </span>
+              </td>
+              <td v-if="estatusAnterior === 'seleccionados'">
+                <a href="#" class="text-info" @click.prevent="cambiarEstatus(aspirante.aspirante_id)">
+                  <i class="fa fa-check-square-o fa-2x"></i>
+                </a>
               </td>
               <td v-if="estatusAnterior === 'registrados'">
                 <a href="#" class="btn btn-sm btn-outline-success" @click.prevent="cambiarEstatus(aspirante.aspirante_id)">
@@ -116,8 +126,12 @@
           else if (estatus === 'entrevistados') {
             this.estatus = 'seleccionados';
             this.estatusAnterior = 'entrevistados';
-          } else if (estatus === 'seleccionados') {
+          }
+          else if (estatus === 'seleccionados') {
+            this.estatus = 'por contratar';
             this.estatusAnterior = 'seleccionados';
+          }else if (estatus === 'por contratar') {
+            this.estatusAnterior = 'por contratar';
           }
         } else {
           this.estatusAnterior = 'registrados';

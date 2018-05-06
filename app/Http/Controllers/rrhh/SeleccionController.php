@@ -73,6 +73,9 @@ class SeleccionController extends Controller
             case 'seleccionados':
                 $aspirantes = $this->obtenerAspirantesEstatus('entrevistados');
                 break;
+            case 'por contratar':
+                $aspirantes = $this->obtenerAspirantesEstatus('seleccionados');
+                break;
         }
         return $aspirantes;
     }
