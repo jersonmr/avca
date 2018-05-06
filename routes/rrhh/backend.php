@@ -31,4 +31,6 @@ Route::group(['prefix' => 'backend', 'middleware' => 'auth'], function() {
     Route::get('obtener-aspirantes-estatus/{estatus}', 'rrhh\SeleccionController@obtenerAspirantesEstatus');
     Route::get('cambiar-estatus', 'rrhh\SeleccionController@cambiarEstatus');
     Route::post('enviar-convocatoria', 'rrhh\SeleccionController@enviarConvocatoria');
+    Route::post('guardar-entrevista', 'rrhh\SeleccionController@guardarEntrevista');
+    Route::get('obtener-datos-entrevista/{aspirante}', 'rrhh\SeleccionController@obtenerDatosEntrevista');
 });

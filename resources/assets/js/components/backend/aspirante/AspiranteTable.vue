@@ -30,11 +30,18 @@
                   <i class="fa fa-envelope-o" aria-hidden="true"></i> Enviar requisitos
                 </button>
               </td>
-              <th v-if="estatusAnterior === 'convocados'">
+              <td v-if="estatusAnterior === 'convocados'">
                 <button class="btn btn-outline-info" data-toggle="modal" data-target="#aspiranteConvocadoModal" @click.prevent="obtenerAspirante(aspirante)">
                   <i class="fa fa-sticky-note" aria-hidden="true"></i>
                 </button>
-              </th>
+              </td>
+              <td v-if="estatusAnterior === 'entrevistados'">
+                <!--Aspirante entrevista modal-->
+                <aspirante-entrevistado-modal :aspirante="aspirante" />
+                <!--<button class="btn btn-outline-info" data-toggle="modal" data-target="#aspiranteEntrevistadoModal" @click.prevent="obtenerAspirante(aspirante)">
+                  <i class="fa fa-eye" aria-hidden="true"></i>
+                </button>-->
+              </td>
               <td v-if="estatusAnterior === 'registrados'">
                 <a href="#" class="btn btn-sm btn-outline-success" @click.prevent="cambiarEstatus(aspirante.aspirante_id)">
                   <i class="fa fa-check"></i>
@@ -51,6 +58,9 @@
 
     <!--Aspirante convocado modal-->
     <aspirante-convocado-modal></aspirante-convocado-modal>
+
+    <!--Aspirante entrevista modal-->
+    <!--<aspirante-entrevistado-modal></aspirante-entrevistado-modal>-->
   </div>
 </template>
 
@@ -58,10 +68,11 @@
   import {EventBus} from "../event-bus";
   import AspiranteVerificadoModal from "./AspiranteVerificadoModal";
   import AspiranteConvocadoModal from "./AspiranteConvocadoModal";
+  import AspiranteEntrevistadoModal from "./AspiranteEntrevistadoModal";
 
   export default {
     name: "AspiranteTable",
-    components: {AspiranteConvocadoModal, AspiranteVerificadoModal},
+    components: {AspiranteEntrevistadoModal, AspiranteConvocadoModal, AspiranteVerificadoModal},
     data() {
       return {
         aspirantes: [],
@@ -132,6 +143,7 @@
       },
       obtenerAspirante(aspirante) {
         EventBus.$emit('email-verificado', aspirante);
+        EventBus.$emit('aspirante-seleccionado', aspirante);
       }
     },
   }
