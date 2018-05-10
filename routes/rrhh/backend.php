@@ -26,6 +26,7 @@ Route::group(['prefix' => 'backend', 'middleware' => 'auth'], function() {
     // Contratacion
     Route::group(['prefix' => 'contratacion'], function () {
         Route::get('contratacion', 'rrhh\ContratacionController@formContratacion')->name('contratacion.form');
+        Route::post('contratacion', 'rrhh\ContratacionController@procesarContratacion')->name('contratacion.form');
         Route::get('obtener-aspirante-info/{id}', 'rrhh\ContratacionController@obtenerAspiranteInfo');
         Route::get('obtener-estados', 'rrhh\ContratacionController@obtenerEstados');
         Route::get('obtener-profesiones', 'rrhh\ContratacionController@obtenerProfesiones');

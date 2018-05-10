@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -23,5 +22,5 @@ Vue.component('aspirante-status', require('./components/backend/aspirante/Aspira
 Vue.component('contratacion', require('./components/backend/rrhh/contratacion/Contratacion'));
 
 const app = new Vue({
-    el: '#rrhh'
+  el: '#rrhh'
 });

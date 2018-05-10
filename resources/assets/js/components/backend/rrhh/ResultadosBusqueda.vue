@@ -4,7 +4,7 @@
         class="nav-item"
         v-for="aspirante in aspirantes"
         :key="aspirante.id">
-      <a href="#" class="nav-link" @click.prevent="obtenerAspiranteInfo(aspirante)">
+      <a href="#" class="nav-link" @click="obtenerAspiranteInfo(aspirante)">
         {{ aspirante.nombre }} {{ aspirante.apellido }}
       </a>
     </li>
@@ -22,9 +22,14 @@
     },
     methods: {
       obtenerAspiranteInfo(aspirante) {
-        axios.get('/rrhh/backend/contratacion/obtener-aspirante-info/' + aspirante.aspirante_id)
+        // axios.get('/rrhh/backend/contratacion/obtener-aspirante-info/' + aspirante.aspirante_id)
+        axios.get('/rrhh/backend/contratacion/contratacion', {
+          params: {
+            aspirante_id: aspirante.aspirante_id
+          }
+        })
           .then(response => {
-            //console.log(response.data);
+            console.log(response.data);
             this.$emit('aspirante', response.data);
             this.aspirantes.splice(0);
           })

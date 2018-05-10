@@ -18,6 +18,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="/adminlte/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- Sweetalert -->
+  <link rel="stylesheet" href="{{ asset('css/sweetalert.min.css') }}">
   <style>
     .user-menu>.dropdown-menu>.user-header {
       height: 175px;
@@ -280,6 +282,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/adminlte/js/adminlte.min.js"></script>
 <!-- Vue App -->
 <script src="{{ asset('js/app.js') }}"></script>
+<!--Sweetalert-->
+<script src="{{ asset('js/sweetalert.min.js') }}"></script>
 @stack('scripts')
 </body>
 </html>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\rrhh;
 use App\Models\rrhh\Aspirante;
 use App\Models\rrhh\Cargo;
 use App\Models\rrhh\Departamento;
+use App\Models\rrhh\Empleado;
 use App\Models\rrhh\Profesion;
 use App\Models\rrhh\Sucursal;
 use App\Models\rrhh\TabuladorSalarial;
@@ -16,7 +17,36 @@ class ContratacionController extends Controller
 {
     public function formContratacion()
     {
-        return view('rrhh.backend.captacion.contratacion');
+        //$aspirante = Aspirante::where('cedula', $request->cedula)->first();
+        //if($request->aspirante_id !== null) return $aspirante;
+        return view('rrhh.backend.captacion.contratacion.contratacion');
+    }
+
+    public function procesarContratacion(Request $request)
+    {
+        $empleado = new Empleado($request->all());
+        $empleado->foto = $request->file('foto')->getClientOriginalName();
+
+        if ($empleado->save()) {
+            // Guardando el archivo de la foto
+            if ($request->hasFile('foto')) {
+                Storage::disk('local')->put('empleados', $request->file('foto'));
+            }
+
+            // Elimino el aspirante de la tabla aspirantes
+            $aspirante = Aspirante::where('cedula', $request->cedula)->first();
+            $aspirante->delete();
+
+            // Generando el contrato en pdf
+            $datosEmpleado = $request->all();
+            $this->generarContrato($datosEmpleado);
+            //return response()->json();
+        }
+    }
+
+    public function generarContrato($datosEmpleado)
+    {
+
     }
 
     public function obtenerAspiranteInfo($aspirante_id)
