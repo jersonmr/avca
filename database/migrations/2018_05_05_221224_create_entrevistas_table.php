@@ -24,7 +24,11 @@ class CreateEntrevistasTable extends Migration
             $table->string('otros', 10);
             $table->string('observaciones');
             $table->unsignedInteger('aspirante_id');
-            $table->foreign('aspirante_id')->references('aspirante_id')->on('aspirantes');
+            $table->foreign('aspirante_id')
+                ->references('aspirante_id')
+                ->on('aspirantes')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

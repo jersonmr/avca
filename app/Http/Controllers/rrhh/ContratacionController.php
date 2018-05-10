@@ -38,9 +38,9 @@ class ContratacionController extends Controller
             $aspirante->delete();
 
             // Generando el contrato en pdf
-            $datosEmpleado = $request->all();
-            $this->generarContrato($datosEmpleado);
-            //return response()->json();
+            //$datosEmpleado = $request->all();
+            //$this->generarContrato($datosEmpleado);
+            return response()->json();
         }
     }
 
