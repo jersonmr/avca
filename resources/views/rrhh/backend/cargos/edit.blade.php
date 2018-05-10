@@ -33,6 +33,12 @@
                 {{ $cargo[0]->perfil }}
               </textarea>
           </div>
+          <div class="form-group">
+            <label for="funciones">Funciones</label>
+            <textarea name="funciones" id="funciones" cols="30" rows="30" class="form-control">
+                {{ $cargo[0]->funciones }}
+              </textarea>
+          </div>
 
           <div class="form-group">
             <input type="submit" value="Actualizar perfil" class="btn btn-info">
@@ -56,6 +62,15 @@
       })
       .catch(function (error) {
         console.error(error)
+      });
+
+    ClassicEditor
+      .create(document.querySelector('#funciones'))
+      .then(function (editor) {
+        // The editor instance
       })
+      .catch(function (error) {
+        console.error(error)
+      });
   </script>
 @endpush
