@@ -1,10 +1,10 @@
 <template>
   <div class="col-12">
-    <div v-if="response">
+    <!--<div v-if="response">
       <div class="alert alert-success">
         {{ response.message }}
       </div>
-    </div>
+    </div>-->
     <div class="card">
       <div class="card-header bg-info-gradient">
         <h3 class="card-title">Registrar una vacante</h3>
@@ -50,6 +50,9 @@
 </template>
 
 <script>
+  import VueSweetalert2 from 'vue-sweetalert2';
+  Vue.use(VueSweetalert2);
+
   export default {
     name: "VacanteForm",
     data() {
@@ -99,6 +102,13 @@
         axios.post('/rrhh/backend/vacante/publicar-vacante', formData)
           .then(response => {
             this.response = response.data;
+            this.$swal({
+              //position: 'top-end',
+              type: 'success',
+              title: 'La vacante ha sido publicada.',
+              showConfirmButton: true,
+              //timer: 2000
+            });
           });
       }
     },

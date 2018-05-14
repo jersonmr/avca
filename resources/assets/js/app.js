@@ -21,6 +21,10 @@ Vue.component('aspirante-table', require('./components/backend/aspirante/Aspiran
 Vue.component('aspirante-status', require('./components/backend/aspirante/AspiranteStatus'));
 Vue.component('contratacion', require('./components/backend/rrhh/contratacion/Contratacion'));
 
+// Empleado
+Vue.component('ficha-empleado', require('./components/backend/rrhh/empleado/FichaEmpleado'));
+Vue.component('buscador', require('./components/backend/rrhh/empleado/Buscador'));
+
 const app = new Vue({
   el: '#rrhh'
 });

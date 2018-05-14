@@ -469,8 +469,7 @@
       obtenerTabulador(tabulador) {
         console.log(tabulador);
       },
-      obtenerTabuladorSalarial() {
-        console.log(this.$refs);
+      obtenerTabuladorSalarial() {        
         /*axios.get('/rrhh/backend/contratacion/obtener-tabulador', {
           params: {
             tabulador_salarial_id: this.cargo.tabulador_salarial
